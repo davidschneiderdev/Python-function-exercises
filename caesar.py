@@ -26,10 +26,10 @@ def convert_sentence(sentence):
 
     new_sentence = ""
     for letter in sentence:
-        if letter == " ":
-            new_sentence += letter
-        else:
+        try:
             new_sentence += convert_letter(letter)
+        except ValueError:
+            new_sentence += letter
     return new_sentence
 
 sentence = "lbh zhfg hayrnea jung lbh unir yrnearq"
