@@ -15,22 +15,22 @@ def convert_letter(letter, rotate_by=13):
     return new_letter
 
 def convert_sentence(sentence):
-    new_list = []
-    for letter in list(sentence):
-        if letter == " ":
-            new_list.append(letter)
-        else:    
-            new_list.append(convert_letter(letter))
-    new_sentence = ''.join(new_list)
-    return new_sentence
-
-    # new_sentence = ""
-    # for letter in sentence:
+    # new_list = []
+    # for letter in list(sentence):
     #     if letter == " ":
-    #         new_sentence += letter
-    #     else:
-    #         new_sentence += convert_letter(letter)
+    #         new_list.append(letter)
+    #     else:    
+    #         new_list.append(convert_letter(letter))
+    # new_sentence = ''.join(new_list)
     # return new_sentence
+
+    new_sentence = ""
+    for letter in sentence:
+        if letter == " ":
+            new_sentence += letter
+        else:
+            new_sentence += convert_letter(letter)
+    return new_sentence
 
 sentence = "lbh zhfg hayrnea jung lbh unir yrnearq"
 new_sentence = convert_sentence(sentence)
