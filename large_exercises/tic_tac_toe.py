@@ -1,28 +1,6 @@
 
 board = [[" "," "," "],[" "," "," "],[" "," "," "],]
 
-def move(player, location, board=board):
-
-    num_spaces = len(board[0]) + len(board[1]) + len(board[2])
-
-    try:
-        if len(board) != 3:
-            print("Board size is incorrect.")
-        elif num_spaces != 9:
-            print("Board size is incorrect.")
-        elif board[location[0]][location[1]] == "X" or board[location[0]][location[1]] == "O":
-            print("Spot occupied. Try again.")
-        else:
-            board[location[0]][location[1]] = player
-            print_board(board)
-            check_win(board)
-            
-    except IndexError:
-        if len(location) != 2:
-            print("Location is invalid. Two coordinates are required.")
-        elif location[0] > 2 or location[1] > 2:
-            print("Location is invalid. Coordinates cannot be greater than two. ")
-
 def print_board(board):
     print(board[0]), print(board[1]), print(board[2])
 
@@ -36,8 +14,6 @@ def y_coordinate_reassign(y_coordinate):
 
 def check_connect_three(moves_list):
 
-    end_game = return True
-    
     move_dictionary = {
         "(0, 0)":"1", "(0, 1)":"2", "(0, 2)":"3", "(1, 0)":"4", "(1, 1)":"5", "(1, 2)":"6", "(2, 0)":"7", "(2, 1)":"8", "(2, 2)":"9"
     }
@@ -107,18 +83,31 @@ def check_win(board):
     # print(f"player2 moves: {player2_moves_list}")
 
     check_connect_three(player1_moves_list)
-    if check_connect_three(player1_moves_list) == True:
-        pass
-
     check_connect_three(player2_moves_list)
-    if check_connect_three(player2_moves_list) == True:
-        pass
+    
+def move(player, location, board=board):
 
+    num_spaces = len(board[0]) + len(board[1]) + len(board[2])
+
+    try:
+        if len(board) != 3:
+            print("Board size is incorrect.")
+        elif num_spaces != 9:
+            print("Board size is incorrect.")
+        elif board[location[0]][location[1]] == "X" or board[location[0]][location[1]] == "O":
+            print("Spot occupied. Try again.")
+        else:
+            board[location[0]][location[1]] = player
+            return board
+
+    except IndexError:
+        if len(location) != 2:
+            print("Location is invalid. Two coordinates are required.")
+        elif location[0] > 2 or location[1] > 2:
+            print("Location is invalid. Coordinates cannot be greater than two. ")
 
 status = True
-while True:
-    board = [[" "," "," "],[" "," "," "],[" "," "," "],]
-    
+while status:
     should_restart = True
     while should_restart:
         should_restart = False
@@ -130,13 +119,20 @@ while True:
         else:
             print("Please enter valid player name.")
             should_restart = True
+        x_coordinate = int(input("Enter x-coordinate: "))
+        y_coordinate = int(input("Enter y-coordinate: "))
+        reversed_y_coordinate = y_coordinate_reassign(y_coordinate)
+        updated_board = move(player, (reversed_y_coordinate, x_coordinate))
+        print_board(updated_board)
+        check_win(updated_board)
 
-    x_coordinate = int(input("Enter x-coordinate: "))
-    y_coordinate = int(input("Enter y-coordinate: "))
-    reversed_y_coordinate = y_coordinate_reassign(y_coordinate)
 
-    # print(player, x_coordinate, y_coordinate)
-    move(player, (reversed_y_coordinate, x_coordinate))
+
+
+
+
+
+
 
 
 
