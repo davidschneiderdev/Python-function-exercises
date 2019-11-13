@@ -7,14 +7,18 @@ def convert_letter(letter, rotate_by=13):
     alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
     # 2. Work
-    position = alphabet.index(letter)
-    new_position = (position + rotate_by) % 26
-    new_letter = alphabet[new_position]
+    try:
+        position = alphabet.index(letter)
+        new_position = (position + rotate_by) % 26
+        new_letter = alphabet[new_position]
+    except ValueError:
+        new_letter = letter
 
     # 3. Result
     return new_letter
 
 def convert_sentence(sentence):
+
     # new_list = []
     # for letter in list(sentence):
     #     if letter == " ":
@@ -26,10 +30,7 @@ def convert_sentence(sentence):
 
     new_sentence = ""
     for letter in sentence:
-        try:
-            new_sentence += convert_letter(letter)
-        except ValueError:
-            new_sentence += letter
+        new_sentence += convert_letter(letter)
     return new_sentence
 
 sentence = "lbh zhfg hayrnea jung lbh unir yrnearq"
