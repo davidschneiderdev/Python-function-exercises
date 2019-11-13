@@ -1,5 +1,5 @@
 
-board = [[" "," "," "],[" "," "," "],[" "," "," "],]
+board = [[" "," "," "],[" "," "," "],[" "," "," "]]
 
 def print_board(board):
     print(board[0]), print(board[1]), print(board[2])
@@ -20,6 +20,18 @@ def check_connect_three(moves_list):
 
     moves_string = ""
 
+    down_win1 = ['1', '4', '7']
+    down_win2 = ['2', '5', '8']
+    down_win3 = ['3', '6', '9']
+
+    across_win1 = ['1', '2', '3']
+    across_win2 = ['4', '5', '6']
+    across_win3 = ['7', '8', '9']
+
+    diagonal_win1 = ['1', '5', '9']
+    diagonal_win2 = ['7', '5', '3']
+
+
     for lst in moves_list:
         for move in lst:
             moves_string += str(move)
@@ -29,46 +41,22 @@ def check_connect_three(moves_list):
         moves_string = moves_string.replace(key, move_dictionary[key])
 
     # print(moves_string)
-    #down win
-    down_win1 = ['1', '4', '7']
-    down_win2 = ['2', '5', '8']
-    down_win3 = ['3', '6', '9']
 
     if all(x in moves_string for x in down_win1):
-        print("You win!")
         return True
     elif all(x in moves_string for x in down_win2):
-        print("You win!")
         return True
     elif all(x in moves_string for x in down_win3):
-        print("You win!")
         return True
-
-    #across win
-    across_win1 = ['1', '2', '3']
-    across_win2 = ['4', '5', '6']
-    across_win3 = ['7', '8', '9']
-
-    if all(x in moves_string for x in across_win1):
-        print("You win!")
+    elif all(x in moves_string for x in across_win1):
         return True
     elif all(x in moves_string for x in across_win2):
-        print("You win!")
         return True
     elif all(x in moves_string for x in across_win3):
-        print("You win!")
         return True
-
-    #diagonal win
-
-    diagonal_win1 = ['1', '5', '9']
-    diagonal_win2 = ['7', '5', '3']
-
-    if all(x in moves_string for x in diagonal_win1):
-        print("You win!")
+    elif all(x in moves_string for x in diagonal_win1):
         return True
     elif all(x in moves_string for x in diagonal_win2):
-        print("You win!")
         return True
 
 def check_win(board):
@@ -82,8 +70,13 @@ def check_win(board):
     # print(f"player1 moves: {player1_moves_list}")
     # print(f"player2 moves: {player2_moves_list}")
 
-    check_connect_three(player1_moves_list)
-    check_connect_three(player2_moves_list)
+    if check_connect_three(player1_moves_list):
+        print("player1 wins!")
+        return True
+
+    if check_connect_three(player2_moves_list):
+        print("player2 wins!")
+        return True
     
 def move(player, location, board=board):
 
@@ -106,11 +99,9 @@ def move(player, location, board=board):
         elif location[0] > 2 or location[1] > 2:
             print("Location is invalid. Coordinates cannot be greater than two. ")
 
-status = True
-while status:
+def main():
     should_restart = True
     while should_restart:
-        should_restart = False
         player = input("player1 or player2? ")
         if player == "player1":
             player = 'X'
@@ -118,13 +109,15 @@ while status:
             player = 'O'
         else:
             print("Please enter valid player name.")
-            should_restart = True
         x_coordinate = int(input("Enter x-coordinate: "))
         y_coordinate = int(input("Enter y-coordinate: "))
         reversed_y_coordinate = y_coordinate_reassign(y_coordinate)
         updated_board = move(player, (reversed_y_coordinate, x_coordinate))
         print_board(updated_board)
-        check_win(updated_board)
+        if check_win(updated_board):
+            should_restart = False
+
+main()
 
 
 
