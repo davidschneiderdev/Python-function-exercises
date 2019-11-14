@@ -2,7 +2,9 @@
 board = [[" "," "," "],[" "," "," "],[" "," "," "]]
 
 def print_board(board):
-    print(board[0]), print(board[1]), print(board[2])
+    # print(board[0]), print(board[1]), print(board[2])
+    for row in board:
+        print(row)
 
 def y_coordinate_reassign(y_coordinate):
     if y_coordinate == 0:
@@ -77,27 +79,47 @@ def check_win(board):
     if check_connect_three(player2_moves_list):
         print("player2 wins!")
         return True
+
+def is_valid_size(board):
+    # 1. Setup/configuration
+    is_valid = True
     
+    # 2. Do some work
+    if len(board) != 3:
+        is_valid = False
+
+    for row in board:
+        if len(row) != 3:
+            is_valid = False
+    
+    # 3. Return the result
+    return is_valid
+
 def move(player, location, board=board):
 
-    num_spaces = len(board[0]) + len(board[1]) + len(board[2])
+    if not is_valid_size(board):
+        raise Exception("Game board size is not valid.")
 
-    try:
-        if len(board) != 3:
-            print("Board size is incorrect.")
-        elif num_spaces != 9:
-            print("Board size is incorrect.")
-        elif board[location[0]][location[1]] == "X" or board[location[0]][location[1]] == "O":
-            print("Spot occupied. Try again.")
-        else:
-            board[location[0]][location[1]] = player
-            return board
+    board[location[0]][location[1]] = player
+    return board
+    # num_spaces = len(board[0]) + len(board[1]) + len(board[2])
 
-    except IndexError:
-        if len(location) != 2:
-            print("Location is invalid. Two coordinates are required.")
-        elif location[0] > 2 or location[1] > 2:
-            print("Location is invalid. Coordinates cannot be greater than two. ")
+    # try:
+    #     if len(board) != 3:
+    #         print("Board size is incorrect.")
+    #     elif num_spaces != 9:
+    #         print("Board size is incorrect.")
+    #     elif board[location[0]][location[1]] == "X" or board[location[0]][location[1]] == "O":
+    #         print("Spot occupied. Try again.")
+    #     else:
+    #         board[location[0]][location[1]] = player
+    #         return board
+
+    # except IndexError:
+    #     if len(location) != 2:
+    #         print("Location is invalid. Two coordinates are required.")
+    #     elif location[0] > 2 or location[1] > 2:
+    #         print("Location is invalid. Coordinates cannot be greater than two. ")
 
 def main():
     should_restart = True
