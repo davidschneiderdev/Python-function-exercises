@@ -117,21 +117,4 @@ def main():
         if check_win(updated_board):
             should_restart = False
 
-main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+main() 
